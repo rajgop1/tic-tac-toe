@@ -136,17 +136,22 @@
 </head>
 
 <body>
+    <!-- Heading -->
     <div id="tictacgame" >
         TIC-TAC-TOE Game
     </div>
+    <!--Game Board-->
     <div id="container">
 
     </div>
+    <!--Game Over-->
     <div id="game" class="game hide">
         <div id="Heading">Game Over!</div>
         <div id="whowins"></div>
         <div id="Button">Restart</div>
     </div>
+    <!--Score-Board-->
+    <!-- The data will be fetched from local storage -->
     <div id="score">
         <div id="Xscore:">
             X-Score:<span id="x"></span>
@@ -155,6 +160,7 @@
             O-Score:<span id="y"></span>
         </div>
     </div>
+    <!--delete scores from local storage-->
     <div id="delscores">
         Delete Scores
     </div>
@@ -162,11 +168,13 @@
         let tictacboard = document.getElementById("container")
         let xscore = 0
         let yscore = 0
+        // Deleting score logic
         document.getElementById("delscores").addEventListener("click",()=>{
             localStorage.removeItem("x")
             localStorage.removeItem("y")
             window.location.reload()
         })
+        //  restarting game logic
         document.getElementById("Button").addEventListener("click", () => {
             document.getElementById("game").classList.add("hide")
             tictacboxes.forEach((item) => {
@@ -175,7 +183,7 @@
             window.location.reload()
 
         })
-
+        //adding boxes in game  
         for (let i = 0; i <= 8; i++) {
             let div = document.createElement("div")
             div.classList.add(`box`)
@@ -185,6 +193,7 @@
         let cross = true
         let tictacboxes = Array.from(document.getElementsByClassName("box"))
 
+        // adding events to boxes
         tictacboxes.forEach((item) => {
             item.addEventListener("click", (e) => {
 
@@ -199,6 +208,7 @@
 
             }, { once: true })
         })
+        // Fetching localstorage data logic
         let xs = localStorage.getItem("x")
             console.log(xs)
             if (xs > 0) {
@@ -209,13 +219,13 @@
                 document.getElementById("y").textContent = ys
             }
 
-
+        // Winning Logic
         let winpossiblietes = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
         let xe = []
         let oe = []
         function win(event) {
             let element = event.target
-
+            
             if (element.textContent === "x") {
                 let data = element.classList[1].substring(2)
                 xe.push(data)
@@ -226,6 +236,7 @@
                 oe.push(data)
                 console.log("o", oe)
             }
+            // X win logic
             if (xe.length >= 3 || oe.length >= 3) {
 
                 for (i of winpossiblietes) {
@@ -250,9 +261,9 @@
                         }
 
                         return
-                        break
                     }
                 }
+                // O Win Logic
                 for (i of winpossiblietes) {
                     counter = 0
                     for (x in i) {
@@ -276,11 +287,11 @@
                         }
                         
                         return
-                        break
                         
                     }
                 }
             }
+            // Draw Logic
             if(xe.length==5&&oe.length==4)
             {
                 document.getElementById("game").classList.remove("hide")
